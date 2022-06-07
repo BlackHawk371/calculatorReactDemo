@@ -1,79 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import React from 'react';
+import Button from './components/Button';
+import style from './assets/css/style.css';
 import { useState } from 'react';
 
 function App() {
+const [count, setCount] = useState(0);
 
-  const [calc, setCalc] = useState("");
-  const [result, setResult] = useState("");
+let incrementCount = () => {
+  setCount(count + 1);
+} ;
 
-  const ops = ['/', '*', '-', '+','.'];
-  const updateCalc = value => {
-    if(
-      ops.includes(value) && calc === '' ||
-      ops.includes(value) && ops.includes(calc.slice(-1))
-    )
-      return;
-    setCalc(calc + value);
-    if (!ops.includes(value)){
-      setResult(eval(calc+value).toString());
-    }
-  }
-
-  const createDigits = () => {
-    const digits = [];
-    for (let i = 1; i < 10; i++) {
-      digits.push(
-        <button onClick={() => updateCalc(i.toString())} key={i}>{i} </button>
-      );
-    }
-    return digits;
-  }
-
-  const calculate = () => {
-    setCalc(eval(calc).toString());
-  }
-
-
-  const deleteLast = () => {
-    if(calc == '') {
-      return;
-    }
-
-    const value = calc.slice(0, -1);
-    setCalc(value);
-
-  }
-
+let decrementCount = () => {
+  setCount(count - 1);
+}
 
   return (
-    <div className="App">
-      <div className="calculator">
-        <div className="display">
-        { result ?   <span>({result})</span> : '' }&nbsp; 
-         { calc || "0"}
-          </div>
-
-          <div className="operators">
-            <button onClick={() => updateCalc('/')}>/</button>
-            <button onClick={() => updateCalc('*')}>*</button>
-            <button onClick={() => updateCalc('+')}>+</button>
-            <button onClick={() => updateCalc('-')}>-</button>
-
-            <button onClick={deleteLast} >DEL</button>
-          </div>
-
-          <div className="digits">
-            {createDigits()}
-            <button onClick={() => updateCalc('0')}>0</button>
-            <button onClick={() => updateCalc('/')}>.</button>
-            <button onClick={calculate}>=</button>
-          </div>
+    <div className='app'>
+      <div>
+        <div className='count'>
+        <h3>Count:</h3>
+        <h1>{count}</h1>
+        </div>
+        <div className='buttons'>
+        <Button title={"-"} action={decrementCount}></Button>
+        <Button title={"+"} action={incrementCount}></Button>
         </div>
       </div>
-   
+
+
+    </div>
   );
 }
 
 export default App;
+
+
+
+
+
+// <div>
+// {users.map((user) => {
+//   return (
+//     <div
+//       key={user.id}
+//       className="item"
+//       // onClick={() => onClickUser(user)}
+//     >
+//       {user.name}
+//     </div>
+//   );
+// })}
+// </div>
